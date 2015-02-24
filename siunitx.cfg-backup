@@ -1,0 +1,57 @@
+\ProvidesFile{siunitx.cfg}
+
+% basic configuration: use / for division, typeset in the current font, and group the digits in the interger part
+\sisetup{
+	per-mode=symbol,
+	detect-all,
+	group-digits=integer}
+
+
+% declare some common non-SI units
+\DeclareSIUnit{\poise}{P}
+\DeclareSIUnit{\surfacepoise}{sP}
+\DeclareSIUnit{\atm}{atm}
+
+% basic units
+\DeclareSIUnit{\massunit}{\kg}
+\DeclareSIUnit{\molarunit}{\kilo\mole}
+\DeclareSIUnit{\timeunit}{\second}
+\DeclareSIUnit{\lengthunit}{\meter}
+\DeclareSIUnit{\energyunit}{\joule}
+\DeclareSIUnit{\temperatureunit}{\kelvin}
+\DeclareSIUnit{\pressureunit}{\Pa}
+\DeclareSIUnit{\forceunit}{\newton}
+\DeclareSIUnit{\powerunit}{\watt}
+
+
+% immediate derived units
+\DeclareSIUnit{\areaunit}{\square\lengthunit}
+\DeclareSIUnit{\volumeunit}{\cubic\lengthunit}
+\DeclareSIUnit{\molarmassunit}{\kg\per\molarunit}
+
+% mass-based units
+\DeclareSIUnit{\densityunit}{\massunit\per\volumeunit}
+\DeclareSIUnit{\massflowrateunit}{\massunit\per\timeunit}
+\DeclareSIUnit{\massfluxunit}{\massflowrateunit\per\areaunit}
+
+% energy units
+\DeclareSIUnit{\specificenergyunit}{\energyunit\per\massunit}
+\DeclareSIUnit{\specificheatunit}{\energyunit\per\massunit\per\temperatureunit}
+\DeclareSIUnit{\specificentropyunit}{\specificheatunit}}
+
+% molar-based units
+\DeclareSIUnit{\concentrationunit}{\molarunit\per\volumeunit}
+
+% energy units in molar base
+\DeclareSIUnit{\molarspecificenergyunit}{\energyunit\per\molarunit}
+\DeclareSIUnit{\molarspecificheatunit}{\energyunit\per\molarunit\per\temperatureunit}
+\DeclareSIUnit{\molarspecificentropyunit}{\molarspecificheatunit}
+
+% properties
+\DeclareSIUnit{\diffusivityunit}{\areaunit\per\timeunit}
+\DeclareSIUnit{\viscosityunit}{\pressureunit\timeunit}
+\DeclareSIUnit{\interfacialtensionunit}{\forceunit\per\lengthunit}
+\DeclareSIUnit{\thermalcondutivityunit}{\powerunit\per\lengthunit\per\temperatureunit}
+
+% other
+\DeclareSIUnit{\velocityunit}{\lengthunit\per\timeunit}

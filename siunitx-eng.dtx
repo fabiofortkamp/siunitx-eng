@@ -1,0 +1,209 @@
+% \iffalse meta-comment
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+# siunitx-eng
+
+A configuration file for the [siunitx](https://www.ctan.org/pkg/siunitx) package, consisting of some default options and common unit names for engineering documents.
+
+## Instalation
+
+Run latex on the `siunitx-eng.dtx` file, to generate all files in this project (including this README). The resulting file `siunitx.cfg`  must be placed in your local texmf tree (search the help for your TeX distribution on how to do this). Personally, I place it under `tex/latex/local`.
+
+%</readme>
+%<*license>
+This is a generated file.
+
+Copyright (C) 2015 by Fábio Fortkamp <fabio@fabiofortkamp.com>
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.3
+of this license or (at your option) any later version.
+The latest version of this license is in
+  http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of LaTeX
+version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Fábio Fortkamp.
+
+This work consists of the files siunitx-eng.dtx 
+and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
+%</license>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+
+This is a generated file.
+
+Copyright (C) 2015 by Fábio Fortkamp <fabio@fabiofortkamp.com>
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.3
+of this license or (at your option) any later version.
+The latest version of this license is in
+  http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of LaTeX
+version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Fábio Fortkamp.
+
+This work consists of the files siunitx-eng.dtx 
+and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
+
+
+\endpreamble
+\usedir{tex/latex/local}
+\generate{
+  \file{siunitx.cfg}{\from{\jobname.dtx}{package}}
+}
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\usedir{tex/latex/siunitx-eng}
+\generate{
+  \file{\jobname.ins}{\from{\jobname.dtx}{install}}
+}
+\nopreamble\nopostamble
+\usedir{tex/latex/siunitx-eng}
+\generate{
+  \file{LICENSE.markdown}{\from{\jobname.dtx}{license}}
+}
+\usedir{tex/latex/siunitx-eng}
+\generate{
+  \file{README.markdown}{\from{\jobname.dtx}{readme}}
+}
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
+%<*package>
+\ProvidesFile{siunitx.cfg}[2014/02/24 v0.1 First set of macros]
+%</package>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{siunitx}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+% 
+%\GetFileInfo{siunitx.cfg}
+%
+%\title{^^A
+%  \textsf{siunitx-eng} --- set of engineering macros for \textsf{siunitx} text\thanks{^^A
+%    This file describes version \fileversion, last revised \filedate.^^A
+%  }^^A
+%}
+%\author{^^A
+%  Fábio Fortkamp\thanks{E-mail: fabio@fabiofortkamp}^^A
+%}
+%\date{Released \filedate}
+%
+%\maketitle
+%
+%\changes{v0.1}{2015/02/24}{First set of macros}
+%
+%
+% \section{Introduction}
+% \label{sec:introduction}
+%
+% The package \textsf{siunitx} provides a nice set of commands for typesetting units; for exemple, to produce \SI{1}{\kilo\gram}, one would type |\SI{1}{\kilo\gram}|. What this extension \textsf{siunitx-eng} does is to use the packages \cs{DeclareSIUnit} macro to create units with meaningful, consistent names. The above example would be typeset with |\SI{1}{\massunit}| (to yield the identical \SI{1}{\massunit}). 
+%
+% The advantages are twofold:
+%
+% \begin{enumerate}
+% \item One does not have to type all slashes, and remembering all the syntax; a single english name will produce the desired output
+% \item We assure the units are consistent in the text (provided, of course, the data was obtaind in a consistent manner.
+% \end{enumerate}
+% 
+%
+%\StopEventually{^^A
+%  \PrintChanges
+%  \PrintIndex
+%}
+% \section{Implementation}
+% \label{sec:implementation}
+% 
+%    \begin{macrocode}
+%<*package>
+% basic configuration: use / for division, typeset in the current font, and group the digits in the interger part
+\sisetup{
+	per-mode=symbol,
+	detect-all,
+	group-digits=integer}
+
+
+% declare some common non-SI units
+\DeclareSIUnit{\poise}{P}
+\DeclareSIUnit{\surfacepoise}{sP}
+\DeclareSIUnit{\atm}{atm}
+
+% basic units
+\DeclareSIUnit{\massunit}{\kg}
+\DeclareSIUnit{\molarunit}{\kilo\mole}
+\DeclareSIUnit{\timeunit}{\second}
+\DeclareSIUnit{\lengthunit}{\meter}
+\DeclareSIUnit{\energyunit}{\joule}
+\DeclareSIUnit{\temperatureunit}{\kelvin}
+\DeclareSIUnit{\pressureunit}{\Pa}
+\DeclareSIUnit{\forceunit}{\newton}
+\DeclareSIUnit{\powerunit}{\watt}
+
+
+% immediate derived units
+\DeclareSIUnit{\areaunit}{\square\lengthunit}
+\DeclareSIUnit{\volumeunit}{\cubic\lengthunit}
+\DeclareSIUnit{\molarmassunit}{\kg\per\molarunit}
+
+% mass-based units
+\DeclareSIUnit{\densityunit}{\massunit\per\volumeunit}
+\DeclareSIUnit{\massflowrateunit}{\massunit\per\timeunit}
+\DeclareSIUnit{\massfluxunit}{\massflowrateunit\per\areaunit}
+
+% energy units
+\DeclareSIUnit{\specificenergyunit}{\energyunit\per\massunit}
+\DeclareSIUnit{\specificheatunit}{\energyunit\per\massunit\per\temperatureunit}
+\DeclareSIUnit{\specificentropyunit}{\specificheatunit}
+
+% molar-based units
+\DeclareSIUnit{\concentrationunit}{\molarunit\per\volumeunit}
+
+% energy units in molar base
+\DeclareSIUnit{\molarspecificenergyunit}{\energyunit\per\molarunit}
+\DeclareSIUnit{\molarspecificheatunit}{\energyunit\per\molarunit\per\temperatureunit}
+\DeclareSIUnit{\molarspecificentropyunit}{\molarspecificheatunit}
+
+% properties
+\DeclareSIUnit{\diffusivityunit}{\areaunit\per\timeunit}
+\DeclareSIUnit{\viscosityunit}{\pressureunit\timeunit}
+\DeclareSIUnit{\interfacialtensionunit}{\forceunit\per\lengthunit}
+\DeclareSIUnit{\thermalcondutivityunit}{\powerunit\per\lengthunit\per\temperatureunit}
+
+% other
+\DeclareSIUnit{\velocityunit}{\lengthunit\per\timeunit}
+%</package>
+%    \end{macrocode}
+%\Finale
