@@ -47,7 +47,7 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 
 This is a generated file.
 
-Copyright (C) 2015 by Fábio Fortkamp <fabio@fabiofortkamp.com>
+Copyright (C) 2015 by Fabio Fortkamp <fabio@fabiofortkamp.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either version 1.3
@@ -59,7 +59,7 @@ version 2005/12/01 or later.
 
 This work has the LPPL maintenance status `maintained'.
 
-The Current Maintainer of this work is Fábio Fortkamp.
+The Current Maintainer of this work is Fabio Fortkamp.
 
 This work consists of the files siunitx-eng.dtx 
 and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
@@ -72,7 +72,7 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 }
 %</install>
 %<install>\endbatchfile
-%<package> \ProvidesFile{siunitx.cfg}[2014/02/24 v0.1 First set of macros]
+%<package> \ProvidesFile{siunitx.cfg}[]
 %<*internal>
 \usedir{tex/latex/siunitx-eng}
 \generate{
@@ -98,7 +98,12 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
+\usepackage{hyperref}
 \usepackage{siunitx}
+
+\usepackage{collcell}
+\newcolumntype{F}{>{\collectcell\cmd}c<{\endcollectcell}}
+\newcolumntype{U}{>{\collectcell\si}c<{\endcollectcell}}
 \begin{document}
   \DocInput{\jobname.dtx}
 \end{document}
@@ -108,12 +113,12 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 %\GetFileInfo{siunitx.cfg}
 %
 %\title{^^A
-%  \textsf{siunitx-eng} --- set of engineering macros for \textsf{siunitx} text\thanks{^^A
+%  \textsf{siunitx-eng} --- set of engineering macros for \textsf{siunitx}\thanks{^^A
 %    This file describes version \fileversion, last revised \filedate.^^A
 %  }^^A
 %}
 %\author{^^A
-%  Fábio Fortkamp\thanks{E-mail: fabio@fabiofortkamp}^^A
+%  Fábio Fortkamp\thanks{E-mail: \href{mailto:fabio@fabiofortkamp.com}{\texttt{fabio@fabiofortkamp.com}}}^^A
 %}
 %\date{Released \filedate}
 %
@@ -125,16 +130,50 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 % \section{Introduction}
 % \label{sec:introduction}
 %
-% The package \textsf{siunitx} provides a nice set of commands for typesetting units; for exemple, to produce \SI{1}{\kilo\gram}, one would type |\SI{1}{\kilo\gram}|. What this extension \textsf{siunitx-eng} does is to use the packages \cs{DeclareSIUnit} macro to create units with meaningful, consistent names. The above example would be typeset with |\SI{1}{\massunit}| (to yield the identical \SI{1}{\massunit}). 
+% The package \href{https://www.ctan.org/pkg/siunitx}{\textsf{siunitx}} provides a nice set of commands for typesetting units; for exemple, to produce \SI{1}{\kilo\gram}, one would type |\SI{1}{\kilo\gram}|. What this extension \textsf{siunitx-eng} does, in the form of a configuration file for that package, is to use the package's \cs{DeclareSIUnit} macro to create units with meaningful, consistent names. The above example would be typeset with |\SI{1}{\massunit}| (to yield the identical \SI{1}{\massunit}). 
 %
 % The advantages are twofold:
 %
 % \begin{enumerate}
 % \item One does not have to type all slashes, and remembering all the syntax; a single english name will produce the desired output
-% \item We assure the units are consistent in the text (provided, of course, the data was obtaind in a consistent manner.
+% \item We assure the units are consistent in the text (provided, of course, the data was obtaind in a consistent manner).
 % \end{enumerate}
-% 
 %
+%
+%\section{Options}
+%\label{sec:options}
+%
+% This extension also sets some options, that, I think, are a better default (the text in brackets are the options passed to the package):
+%
+% \begin{itemize}
+% \item fractions are always indicated with a symbol, like \SI{1}{\velocityunit} (and not with negative exponents, like \SI[per-mode=reciprocal]{1}{\velocityunit}) (\texttt{[per-mode=symbol]})
+% \item follow the surrounding font settings (\texttt{[detect-all]})
+% \item group integer digits, but not decimal ones; compare \num{1234567.345678} with the default \num[group-digits=true]{1234567.345678} (\texttt{[group-digits=integer]}) 
+% \end{itemize}
+%
+%
+%\section{Available macros}
+%\label{sec:macros}
+%
+% There are two basic unit types in \textsf{siunitx-eng}. First, there are units for common non-SI units, like poise \DescribeMacro{\poise}, surface poise \DescribeMacro{\surfacepoise} and atm \DescribeMacro{\atm}. There are no special reasoning for including these and not others; as I find myself running into other units, I will probably add them here.
+% 
+% All other macros follow the pattern |\|\meta{name}|unit|, so they are self-explanatory. \autoref{tab:macros} lists all available macros and what they output. Notice that energy-based units can have  |molar| at the beginning, indicating a molar base.
+%
+% \begin{table}[!ht]
+%   \centering
+% \begin{tabular}[t]{|c|c|}
+% \hline
+% \meta{name} & output\\
+% \hline\hline
+% \multicolumn{2}{|c|}{\textit{Basic units}}\\
+% \hline
+% |mass| & \si{\massunit}\\
+% |molar| & \si{\molarunit}\\
+% \hline
+% \end{tabular}
+%   \caption{Available macros in the \textsf{siunitx-eng} extension}
+%   \label{tab:macros}
+% \end{table}
 %\StopEventually{^^A
 %}
 % \section{Implementation}
@@ -182,7 +221,7 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 \DeclareSIUnit{\specificentropyunit}{\specificheatunit}
 
 % molar-based units
-\DeclareSIUnit{\concentrationunit}{\molarunit\per\volumeunit}
+\DeclareSIUnit{\molarconcentrationunit}{\molarunit\per\volumeunit}
 
 % energy units in molar base
 \DeclareSIUnit{\molarspecificenergyunit}{\energyunit\per\molarunit}
