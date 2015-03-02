@@ -1,0 +1,141 @@
+* Introduction
+
+This is a script to build the LaTeX installation file ~siunitx-eng.dtx~ from the general template ~siunitx-eng-template.dtx~.
+
+I'm doing this because I wanted a way to automatically link all defined macros with reference tables in the documentation. This extension to the package ~siunitx~ defines some aliases to units using the ~\DeclareSIUnit{<name>}{<definition>}~ code construct. The standard for LaTeX (and I'm trying to be strict on this for learning purposes) is to distribute LaTeX code in a ~.dtx~ file, a literate programming file that cointains code /and/ documentation. It is customary to print the implementation section, but some used may want to disable this for clarity (and I personally think it should be disable). Then, I need a way to include all macros I defined and explain what they mean.
+
+For this simple package, a table may suffice, describing the aliases and what they mean. Hence, I think this process can be automated, as follows. I can create some text files with tables, in CSV format, for all units I want to defined, separated by categories; For example, I have a ~non-si.txt~ table for units like atm and poise, a ~properties.txt~ table for properties etc. Then, in a template, I include some code to loop through this table and build the ~\DeclareSIUnit{}{} expression. /At the same time/, I loop to build a nicely formatted table for reference (including my own). There is then some commands to /render/ this template using the tables.
+
+My input files are:
+
+- the general template to build the ~dtx~ file
+- tables in CSV format with the units
+- a README
+- a LICENSE file
+- git support files
+- scripts to build ~dtx~
+
+When I run the scripts, I have a final, complete ~siunitx-eng.dtx~ file. At this stage, the project can be uploaded to Github, where it can be downloaded. LaTeX users can do the standard installation procedure of running the ~dtx~ file through LaTeX, having the documentation PDF file and the ~cfg~ file than can be installed in the TeX system.
+
+Users familiar to org-mode and Python can tweak the scripts. Adding new units is fairly easy: just add lines in the apropriate tables, and build the project again. Maybe later I can even code a way to automatically loop though all tables, making the creation of categories even easier.
+
+I want also to include a Makefile, with various actions:
+
+- run scripts (~make dtx~)
+- run LaTeX on the files (~make~)
+- link to TeXLive folders (~make texlive~)
+
+* Tools 
+
+I'm using Python for this, mainly with the Jinja2 template library. Makefiles are used to automate all process.
+
+* Building the ~dtx~ file
+** Initial setup
+
+First, we need to setup up the python interpreter and the encoding (as Jinja2 is based on Unicode)
+
+#+BEGIN_SRC python :session main :tangle build.py
+  #!/usr/bin/env python
+  #-*- coding: utf-8 -*-
+#+END_SRC
+
+#+RESULTS:
+
+Then we import some packages. ~csv~ is for reading the text tables, ~pathlib~ is a python3 library for manipulating paths, and ~jinja2~ is our template libray
+
+#+BEGIN_SRC python :session main :tangle build.py
+  import csv
+  import pathlib
+  import jinja2
+#+END_SRC
+
+#+RESULTS:
+
+We define some constants that will be needed. The names are self-explanatory.
+
+#+BEGIN_SRC python :session main :tangle build.py
+  TEMPLATES_FOLDER = 'templates'
+  TABLES_FOLDER = 'tables'
+
+  DTX_MAIN_TEMPLATE = 'siunitx-eng-template.dtx'
+
+  DTX_OUTFILE = 'siunitx-eng.dtx'
+#+END_SRC
+
+#+RESULTS:
+
+** Configuring Jinja2
+
+Using Jinja2 requires setting what is called an /environment/. This object stores our settings for the library. In our case, the main thing we need to do is modifying the delimeters. Jinja2 is heavily based on '{' and '}' characters, which are a major key in LaTeX itself. So, [[http://flask.pocoo.org/snippets/55/ ][based on this configuration]], I'm using parentheses for delimiting blocks and variables.
+
+We use specify a Jinja2 /loader/ a way to look for templates. In this case we use a ~FileSystemLoader~, to look for templates files, and its main argument is a path, so we specify our templates folder.
+
+#+BEGIN_SRC python :session main :tangle build.py
+  dtxRenderer = jinja2.Environment(
+      block_start_string = '((*',
+      block_end_string = '*))',
+      variable_start_string = '(((',
+      variable_end_string = ')))',
+      comment_start_string = '((=',
+      comment_end_string = '=))',
+      loader = jinja2.FileSystemLoader(TEMPLATES_FOLDER))
+#+END_SRC
+
+#+RESULTS:
+
+We then load our template, using this defined environment.
+
+#+BEGIN_SRC python :session main :tangle build.py
+  dtxTemplate = dtxRenderer.get_template(DTX_MAIN_TEMPLATE)
+#+END_SRC
+
+#+RESULTS:
+
+** Setting the output file
+
+Jinja2's template loader  automatically does file handling for us; we just specify a folder name. To write the rendered template to a folder, as well as reading the tables, we need ways to represent this files in a cross-platform way. That's why we use the ~pathlib~ package; the slash '/' operator automatically defines the correct directory separator
+
+#+BEGIN_SRC python :session main :tangle build.py
+  currentDirectory = pathlib.Path('.')
+  tableDirectory = currentDirectory / TABLES_FOLDER
+
+  outputFile = currentDirectory / DTX_OUTFILE
+#+END_SRC
+
+#+RESULTS:
+
+** Reading tables and writing the template
+
+To test, we will analyze only the non-si table
+
+#+BEGIN_SRC python :session main :tangle build.py
+  nonSIFile = tableDirectory / 'non-si.txt' 
+#+END_SRC
+
+#+RESULTS:
+
+Then, we read this CSV file, and convert the lines into a list of dictionaries, with keys 'name' and 'definition'.
+
+#+BEGIN_SRC python :session main :tangle build.py
+  with nonSIFile.open() as inFilePointer:
+      reader = csv.DictReader(inFilePointer, fieldnames=['name','definition'])
+
+      nonSIMacros = []
+
+      for row in reader:
+          nonSIMacros.append(row)
+
+
+#+END_SRC
+
+#+RESULTS:
+
+
+Finally, we render the template, and write to file:
+
+#+BEGIN_SRC python :session main :tangle build.py
+  dtxText = dtxTemplate.render(non_si_macros=nonSIMacros)
+
+  with outputFile.open(mode='w') as outFilePointer:
+      outFilePointer.write(dtxText)
+#+END_SRC

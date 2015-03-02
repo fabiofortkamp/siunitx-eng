@@ -1,6 +1,6 @@
 This is a generated file.
 
-Copyright (C) 2015 by FÃ¡bio Fortkamp <fabio@fabiofortkamp.com>
+Copyright (C) 2015 by Fábio Fortkamp <fabio@fabiofortkamp.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either version 1.3
@@ -12,7 +12,7 @@ version 2005/12/01 or later.
 
 This work has the LPPL maintenance status `maintained'.
 
-The Current Maintainer of this work is FÃ¡bio Fortkamp.
+The Current Maintainer of this work is Fábio Fortkamp.
 
 This work consists of the files siunitx-eng.dtx
 and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf

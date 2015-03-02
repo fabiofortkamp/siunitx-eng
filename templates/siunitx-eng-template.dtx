@@ -2,36 +2,6 @@
 %<*internal>
 \iffalse
 %</internal>
-%<*readme>
-# siunitx-eng
-
-A configuration file for the [siunitx](https://www.ctan.org/pkg/siunitx) package, consisting of some default options and common unit names for engineering documents.
-
-## Instalation
-
-Run latex on the `siunitx-eng.dtx` file, to generate all files in this project (including this README). The resulting file `siunitx.cfg`  must be placed in your local texmf tree (search the help for your TeX distribution on how to do this). Personally, I place it under `tex/latex/local`.
-
-%</readme>
-%<*license>
-This is a generated file.
-
-Copyright (C) 2015 by Fábio Fortkamp <fabio@fabiofortkamp.com>
-
-This work may be distributed and/or modified under the
-conditions of the LaTeX Project Public License, either version 1.3
-of this license or (at your option) any later version.
-The latest version of this license is in
-  http://www.latex-project.org/lppl.txt
-and version 1.3 or later is part of all distributions of LaTeX
-version 2005/12/01 or later.
-
-This work has the LPPL maintenance status `maintained'.
-
-The Current Maintainer of this work is Fábio Fortkamp.
-
-This work consists of the files siunitx-eng.dtx 
-and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
-%</license>
 %<*internal>
 \fi
 \def\nameofplainTeX{plain}
@@ -74,19 +44,6 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 %<install>\endbatchfile
 %<package> \ProvidesFile{siunitx.cfg}[]
 %<*internal>
-\usedir{tex/latex/siunitx-eng}
-\generate{
-  \file{\jobname.ins}{\from{\jobname.dtx}{install}}
-}
-\nopreamble\nopostamble
-\usedir{tex/latex/siunitx-eng}
-\generate{
-  \file{LICENSE.markdown}{\from{\jobname.dtx}{license}}
-}
-\usedir{tex/latex/siunitx-eng}
-\generate{
-  \file{README.markdown}{\from{\jobname.dtx}{readme}}
-}
 \ifx\fmtname\nameofplainTeX
   \expandafter\endbatchfile
 \else
@@ -118,7 +75,7 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 %  }^^A
 %}
 %\author{^^A
-%  Fábio Fortkamp\thanks{E-mail: \href{mailto:fabio@fabiofortkamp.com}{\texttt{fabio@fabiofortkamp.com}}}^^A
+%  Fabio Fortkamp\thanks{E-mail: \href{mailto:fabio@fabiofortkamp.com}{\texttt{fabio@fabiofortkamp.com}}}^^A
 %}
 %\date{Released \filedate}
 %
@@ -130,7 +87,7 @@ and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
 % \section{Introduction}
 % \label{sec:introduction}
 %
-% The package \href{https://www.ctan.org/pkg/siunitx}{\textsf{siunitx}} provides a nice set of commands for typesetting units; for exemple, to produce \SI{1}{\kilo\gram}, one would type |\SI{1}{\kilo\gram}|. What this extension \textsf{siunitx-eng} does, in the form of a configuration file for that package, is to use the package's \cs{DeclareSIUnit} macro to create units with meaningful, consistent names. The above example would be typeset with |\SI{1}{\massunit}| (to yield the identical \SI{1}{\massunit}). 
+%The package \href{https://www.ctan.org/pkg/siunitx}{\textsf{siunitx}} provides a nice set of commands for typesetting units; for exemple, to produce \SI{1}{\kilo\gram}, one would type |\SI{1}{\kilo\gram}|. What this extension \textsf{siunitx-eng} does, in the form of a configuration file for that package, is to use the package's \cs{DeclareSIUnit} macro to create units with meaningful, consistent names. The above example would be typeset with |\SI{1}{\massunit}| (to yield the identical \SI{1}{\massunit}). 
 %
 % The advantages are twofold:
 %
