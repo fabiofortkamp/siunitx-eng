@@ -14,5 +14,4 @@ This work has the LPPL maintenance status `maintained'.
 
 The Current Maintainer of this work is Fábio Fortkamp.
 
-This work consists of the files siunitx-eng.dtx
-and the derived files siunitx.cfg, siunitx-eng.ins and siunitx-eng.pdf
+This work consists of the file siunitx.cfg.
